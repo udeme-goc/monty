@@ -3,20 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-/* Data structures */
-
-/**
- * struct stack_s - doubly linked list representation of a stack (or queue)
- * @n: integer
- * @prev: points to the previous element of the stack (or queue)
- * @next: points to the next element of the stack (or queue)
- *
- * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO
- */
-
+/* Structures */
 typedef struct stack_s
 {
 	int n;
@@ -24,41 +12,43 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
-
-/**
- * struct instruction_s - opcode and its function
- * @opcode: the opcode
- * @f: function to handle the opcode
- *
- * Description: opcode and its function
- * for stack, queues, LIFO, FIFO
- */
-
-typedef struct instruction_s
+typedef struct list_s
 {
-	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
-} instruction_t;
+	char *inst;
+	int n;
+	struct list_s *next;
+} list_t;
 
+/* Global variable */
+extern list_t *list_opcode;
 
 /* Function prototypes */
+void (*ptr_opcode(list_t *head))(stack_t **stack, unsigned int line_number);
 
-/* monty_main.c */
-void process_file(const char *filename);
-
-/* monty_operations.c */
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
+int cmp_inst(char *str1, char *str2);
+int cpy_arg(list_t *t, char *buff);
+int check_arg(char *arg);
+void check_file(char *str);
+void core_stack_queue(stack_t **stack, unsigned int line_number, int sq);
+void free_all(list_t *list, stack_t *stack);
+void free_list_opcode(list_t *head);
+void free_list_stack(stack_t *head);
+int stack_len(stack_t *head);
+void get_file(char *file_name);
+void (*get_opcode(char *s, unsigned int line_number))(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
-/* Add more opcode functions as needed */
-
-/* Utility functions */
-void free_stack(stack_t **stack);
-int is_empty(stack_t *stack);
-void monty_error(const char *msg, unsigned int line_number);
+void nothing(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void push(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void rotr(stack_t **stack, unsigned int line_number);
+void stack(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
+

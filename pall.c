@@ -1,21 +1,30 @@
 #include "monty.h"
 
 /**
- * pall - Prints all the values on the stack.
- * @stack: Pointer to the top of the stack.
- * @line_number: Line number where the opcode appears.
+ * pall - Prints all the values in the stack
+ * @stack: Pointer to the stack structure
+ * @line_number: Line number of the instruction (unused)
+ *
+ * This function prints the values stored in the stack, starting from the
+ * top element and moving towards the bottom.
  */
 
-void pall(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack, UN unsigned int line_number)
 {
-	(void)line_number;
+	stack_t *temp = NULL;
+	int n = 0;
 
-	stack_t *current = *stack;
+	/* Check if the stack is empty */
+	if (*stack == NULL)
+		return;
 
-	while (current != NULL)
+	temp = *stack;
+
+	/* Traverse the stack and print its contents */
+	while (temp)
 	{
-		printf("%d\n", current->n);
-		current = current->next;
+		n = temp->n;
+		printf("%d\n", n);
+		temp = temp->next;
 	}
 }
-

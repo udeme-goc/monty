@@ -1,38 +1,45 @@
-#nclude "monty.h"
+#include "monty.h"
 
 /**
- * push - Pushes an element onto the stack.
- * @stack: Pointer to the top of the stack.
- * @line_number: Line number where the opcode appears.
+ * push - Pushes a new node onto the stack
+ * @stack: Pointer to the stack structure
+ * @line_number: Line number of the instruction
+ *
+ * This function pushes a new node onto the stack using the core_stack_queue
+ * function with the mode 0.
  */
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	char *value_str = strtok(NULL, " \t\n");
-
-	if (value_str == NULL)
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	int value = atoi(value_str);
-
-	/* Create a new stack element */
-	stack_t *new_node = malloc(sizeof(stack_t));
-	if (new_node == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-
-	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
-
-	if (*stack != NULL)
-	(*stack)->prev = new_node;
-
-	*stack = new_node;
+	core_stack_queue(stack, line_number, 0);
 }
 
+
+/**
+ * stack - Sets the stack mode
+ * @stack: Pointer to the stack structure
+ * @line_number: Line number of the instruction
+ *
+ * This function sets the stack mode using the core_stack_queue function
+ * with the mode 1.
+ */
+
+void stack(stack_t **stack, unsigned int line_number)
+{
+	core_stack_queue(stack, line_number, 1);
+}
+
+
+/**
+ * queue - Sets the queue mode
+ * @stack: Pointer to the stack structure
+ * @line_number: Line number of the instruction
+ *
+ * This function sets the queue mode using the core_stack_queue function
+ * with the mode 2.
+ */
+
+void queue(stack_t **stack, unsigned int line_number)
+{
+	core_stack_queue(stack, line_number, 2);
+}
