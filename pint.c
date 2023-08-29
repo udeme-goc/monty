@@ -1,24 +1,25 @@
 #include "monty.h"
 
 /**
- * pint - Prints the value at the top of the stack
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
+ * f_pint - Prints the top element of the stack.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * This function prints the integer value at the top of the stack. It handles
- * the case where the stack is empty.
+ * Return: No return value.
  */
 
-void pint(stack_t **stack, unsigned int line_number)
+void f_pint(stack_t **head, unsigned int counter)
 {
 	/* Check if the stack is empty */
-	if (*stack == NULL)
+	if (*head == NULL)
 	{
-		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-		free_list_stack(*stack);
+		fprintf(stderr, "L%u: can't pint, stack empty\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
 
-	/* Print the integer value at the top of the stack */
-	printf("%d\n", (*stack)->n);
+	/* Print the top element of the stack */
+	printf("%d\n", (*head)->n);
 }

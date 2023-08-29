@@ -1,37 +1,39 @@
 #include "monty.h"
 
 /**
- * sub - Subtracts the top value from the second top value
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
+ * f_sub - Subtracts the top element of the stack from the second top element.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * This function subtracts the value of the top element from the value of the
- * second top element in the stack. It then removes the top element.
+ * Return: No return value.
  */
 
-void sub(stack_t **stack, unsigned int line_number)
+void f_sub(stack_t **head, unsigned int counter)
 {
-	stack_t *temp = NULL;
-	int n;
+	stack_t *aux;
+	int sus, nodes;
 
-	n = stack_len(*stack);
+	aux = *head;
 
-	/* Check if the stack has at least 2 elements */
-	if (n < 2)
+	/* Count the number of nodes in the stack */
+	for (nodes = 0; aux != NULL; nodes++)
+		aux = aux->next;
+
+	/* Check if there are at least 2 nodes in the stack */
+	if (nodes < 2)
 	{
-		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
-		if (list_opcode != NULL)
-			free_list_opcode(list_opcode);
-		if (*stack != NULL)
-			free_list_stack(*stack);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
 
-	temp = *stack;
+	aux = *head;
 
-	/* Subtract the value of the top element from the second top element */
-	temp->next->n -= temp->n;
-
-	/* Remove the top element */
-	pop(stack, line_number);
+	/* Subtract the top element from the second top element */
+	sus = aux->next->n - aux->n;
+	aux->next->n = sus;
+	*head = aux->next;
+	free(aux);
 }

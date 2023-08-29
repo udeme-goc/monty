@@ -1,0 +1,30 @@
+#include "monty.h"
+
+/**
+ * add - Adds the top two values of the stack
+ * @stack: Pointer to the stack structure
+ * @line_number: Line number of the instruction
+ */
+
+void add(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = NULL;
+	int n;
+
+	/* Get the number of elements in the stack */
+	n = stack_len(*stack);
+
+	/* Check if there are at least two elements to perform addition */
+	if (n < 2)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+
+		/* Clean up and exit */
+		free_opcode_and_stack();
+	}
+
+	/* Perform addition and update the stack */
+	temp = *stack;
+	temp->next->n += temp->n;
+	pop(stack, line_number);
+}

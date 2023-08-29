@@ -1,42 +1,30 @@
 #include "monty.h"
 
 /**
- * pstr - Prints a string of characters from the stack
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction (unused)
+ * f_pstr - Prints the string starting at the top of the stack,
+ * followed by a new line.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * Function prints the string of characters represented by the ASCII values
- * stored in the stack. It stops printing when a null byte (ASCII 0) is reached
- * or if a non-printable character is encountered.
+ * Return: No return value.
  */
 
-void pstr(stack_t **stack, UN unsigned int line_number)
+void f_pstr(stack_t **head, unsigned int counter)
 {
-	stack_t *temp = NULL;
+	stack_t *h;
+	(void)counter;
 
-	/* Check if the stack is empty */
-	if (*stack == NULL)
+	h = *head;
+
+	/* Traverse stack & print characters until non-printable or end of stack */
+	while (h)
 	{
-		putchar(10);  /* Print a newline */
-		return;
-	}
-
-	temp = *stack;
-
-	/* Traverse the stack and print characters */
-	while (temp)
-	{
-		/* Check if the ASCII value is out of printable range or null byte */
-		if ((temp->n < 0 || temp->n > 126) || temp->n == 0)
+		if (h->n > 127 || h->n <= 0)
 		{
-			putchar(10);  /* Print a newline */
-			return;
+			break;
 		}
-
-		/* Print the character corresponding to the ASCII value */
-		printf("%c", temp->n);
-		temp = temp->next;
+		printf("%c", h->n);
+		h = h->next;
 	}
-
-	putchar(10);  /* Print a newline */
+	printf("\n");
 }

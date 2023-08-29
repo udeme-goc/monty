@@ -1,45 +1,56 @@
 #include "monty.h"
 
 /**
- * push - Pushes a new node onto the stack
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
+ * f_push - Adds a node to the stack.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * This function pushes a new node onto the stack using the core_stack_queue
- * function with the mode 0.
+ * Return: No return value.
  */
 
-void push(stack_t **stack, unsigned int line_number)
+void f_push(stack_t **head, unsigned int counter)
 {
-	core_stack_queue(stack, line_number, 0);
-}
+	int n, j = 0, flag = 0;
 
+	/* Check if an argument is provided */
+	if (bus.arg)
+	{
+		/* Handle negative numbers */
+		if (bus.arg[0] == '-')
+		j++;
 
-/**
- * stack - Sets the stack mode
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
- *
- * This function sets the stack mode using the core_stack_queue function
- * with the mode 1.
- */
+		/* Check if the argument is a valid integer */
+		for (; bus.arg[j] != '\0'; j++)
+		{
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
+			flag = 1;
+		}
 
-void stack(stack_t **stack, unsigned int line_number)
-{
-	core_stack_queue(stack, line_number, 1);
-}
+		/* If the argument is not a valid integer */
+		if (flag == 1)
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", counter);
+			fclose(bus.file);
+			free(bus.content);
+			free_stack(*head);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
 
+	/* Convert the argument to an integer */
+	n = atoi(bus.arg);
 
-/**
- * queue - Sets the queue mode
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
- *
- * This function sets the queue mode using the core_stack_queue function
- * with the mode 2.
- */
-
-void queue(stack_t **stack, unsigned int line_number)
-{
-	core_stack_queue(stack, line_number, 2);
+	/* Determine whether to add the node to the stack or queue */
+	if (bus.lifi == 0)
+		addnode(head, n); /* Add to stack */
+	else
+		addqueue(head, n); /* Add to queue */
 }

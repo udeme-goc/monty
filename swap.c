@@ -1,49 +1,41 @@
 #include "monty.h"
 
 /**
- * swap - Swaps the top two values in the stack
- * @stack: Pointer to the stack structure
- * @line_number: Line number of the instruction
+ * f_swap - Swaps the top two elements of the stack.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * This function swaps the positions of the top two elements in the stack.
+ * Return: No return value.
  */
 
-void swap(stack_t **stack, unsigned int line_number)
+void f_swap(stack_t **head, unsigned int counter)
 {
-	stack_t *temp = NULL;
-	int n;
+	stack_t *h;
+	int len = 0, aux;
 
-	n = stack_len(*stack);
+	h = *head;
 
-	/* Check if the stack has at least 2 elements */
-	if (n < 2)
+	/* Count the number of nodes in the stack */
+	while (h)
 	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-		if (list_opcode != NULL)
-			free_list_opcode(list_opcode);
-		if (*stack != NULL)
-			free_list_stack(*stack);
+		h = h->next;
+		len++;
+	}
+
+	/* Check if there are at least 2 nodes in the stack */
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	else if (n == 2)
-	{
-		/* Swap top two elements when there are only two elements in the stack */
-		temp = (*stack)->next;
-		(*stack)->next = NULL;
-		(*stack)->prev = temp;
-		temp->prev = NULL;
-		temp->next = *stack;
-		*stack = temp;
-	}
-	else
-	{
-		/* Swap top two elements when there are more than two elements in stack */
-		temp = (*stack)->next;
-		(*stack)->next = (*stack)->next->next;
-		(*stack)->prev = temp;
-		temp->next->prev = *stack;
-		temp->prev = NULL;
-		temp->next = *stack;
-		*stack = temp;
-	}
+
+	h = *head;
+
+	/* Swap the values of the top two elements */
+	aux = h->n;
+	h->n = h->next->n;
+	h->next->n = aux;
 }

@@ -1,17 +1,16 @@
 #include "monty.h"
 
 /**
- * nop - Does nothing
- * @stack: Pointer to the stack structure (unused)
- * @line_number: Line number of the instruction (unused)
+ * f_nop - Does nothing.
+ * @head: Pointer to the stack's head.
+ * @counter: Line number.
  *
- * This function serves as a placeholder and does nothing when executed. It's
- * typically used as placeholder in the interpreter when the "nop" instruction
- * is encountered.
+ * Return: No return value.
  */
 
-void nop(UN stack_t **stack, UN unsigned int line_number)
+void f_nop(stack_t **head, unsigned int counter)
 {
-	/* No operation is performed in this function */
+	/* Avoid unused variable warnings */
+	(void)counter;
+	(void)head;
 }
-
